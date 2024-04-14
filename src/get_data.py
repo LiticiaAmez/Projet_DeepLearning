@@ -1,8 +1,10 @@
+import pandas as pd
+import matplotlib.pyplot as plt
 import requests
 
 def load_data():
     # Définir l'URL de l'API
-    url = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/qualite-de-lair-france/records?limit=20&timezone=Europe%2FParis"
+    url = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/base-des-diagnostics-de-performance-energetique-dpe/records?limit=-1"
 
     try:
         # Envoyer une requête GET à l'API
@@ -12,10 +14,6 @@ def load_data():
         if response.status_code == 200:
             # Récupérer les données JSON
             data = response.json()
-            
-            # Afficher le contenu de data pour le débogage
-            print("Contenu de data:", data)
-            
             return data
         else:
             # Afficher un message d'erreur si la requête a échoué
@@ -26,4 +24,16 @@ def load_data():
         print("Erreur lors du chargement des données:", e)
         return None
 
-load_data()
+# Appeler la fonction load_data pour obtenir les données
+data = load_data()
+
+# Afficher les données récupérées
+print(data)
+
+#--------
+
+# Charger les données à partir du fichier CSV
+df = pd.read_csv("base_dpe.csv", delimiter=";", nrows=None)
+
+# Afficher les premières lignes pour vérification
+print(df.head())
